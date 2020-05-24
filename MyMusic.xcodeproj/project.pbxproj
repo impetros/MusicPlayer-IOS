@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2F27F11024790FCC009C1DFC /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 2F27F10F24790FCC009C1DFC /* data.json */; };
+		2F19463E247AF181007A9E79 /* songs.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2F19463D247AF055007A9E79 /* songs.txt */; };
 		83CEC37C24376D4A00188BF6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CEC37B24376D4A00188BF6 /* AppDelegate.swift */; };
 		83CEC37E24376D4A00188BF6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CEC37D24376D4A00188BF6 /* SceneDelegate.swift */; };
 		83CEC38024376D4A00188BF6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CEC37F24376D4A00188BF6 /* ViewController.swift */; };
@@ -21,7 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2F27F10F24790FCC009C1DFC /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
+		2F19463D247AF055007A9E79 /* songs.txt */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = songs.txt; sourceTree = "<group>"; };
 		83CEC37824376D4A00188BF6 /* MyMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83CEC37B24376D4A00188BF6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		83CEC37D24376D4A00188BF6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,7 +77,7 @@
 				83CEC38624376D4B00188BF6 /* LaunchScreen.storyboard */,
 				83CEC38924376D4B00188BF6 /* Info.plist */,
 				83CEC3962437702600188BF6 /* PlayerViewController.swift */,
-				2F27F10F24790FCC009C1DFC /* data.json */,
+				2F19463D247AF055007A9E79 /* songs.txt */,
 			);
 			path = MyMusic;
 			sourceTree = "<group>";
@@ -141,7 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83CEC38824376D4B00188BF6 /* LaunchScreen.storyboard in Resources */,
-				2F27F11024790FCC009C1DFC /* data.json in Resources */,
+				2F19463E247AF181007A9E79 /* songs.txt in Resources */,
 				83CEC38524376D4B00188BF6 /* Assets.xcassets in Resources */,
 				83CEC39424376D8600188BF6 /* song3.mp3 in Resources */,
 				83CEC38324376D4A00188BF6 /* Main.storyboard in Resources */,

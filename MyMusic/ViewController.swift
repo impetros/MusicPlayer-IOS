@@ -30,51 +30,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     func configureSongs() {
-        songs.append(Song(name: "The Hills",
-                          albumName: "Beauty behind the Madness",
-                          artistName: "The Weeknd",
-                          imageName: "cover1",
-                          trackName: "song1"))
-        songs.append(Song(name: "7 Rings",
-                          albumName: "thank u, next",
-                          artistName: "Ariana Grande",
-                          imageName: "cover2",
-                          trackName: "song2"))
-        songs.append(Song(name: "Godzilla",
-                          albumName: "Music To Be Murdered By",
-                          artistName: "Eminem",
-                          imageName: "cover3",
-                          trackName: "song3"))
-        songs.append(Song(name: "The Hills",
-                          albumName: "Beauty behind the Madness",
-                          artistName: "The Weeknd",
-                          imageName: "cover1",
-                          trackName: "song1"))
-        songs.append(Song(name: "7 Rings",
-                          albumName: "thank u, next",
-                          artistName: "Ariana Grande",
-                          imageName: "cover2",
-                          trackName: "song2"))
-        songs.append(Song(name: "Godzilla",
-                          albumName: "Music To Be Murdered By",
-                          artistName: "Eminem",
-                          imageName: "cover3",
-                          trackName: "song3"))
-        songs.append(Song(name: "The Hills",
-                          albumName: "Beauty behind the Madness",
-                          artistName: "The Weeknd",
-                          imageName: "cover1",
-                          trackName: "song1"))
-        songs.append(Song(name: "7 Rings",
-                          albumName: "thank u, next",
-                          artistName: "Ariana Grande",
-                          imageName: "cover2",
-                          trackName: "song2"))
-        songs.append(Song(name: "Godzilla",
-                          albumName: "Music To Be Murdered By",
-                          artistName: "Eminem",
-                          imageName: "cover3",
-                          trackName: "song3"))
+        let path = Bundle.main.path(forResource: "songs", ofType: "txt") // file path for file "data.txt"
+        let string = try! String(contentsOfFile: path!, encoding: String.Encoding.utf8)
+        print(string)
+        let array = string.components(separatedBy: "\r\n")
+        print(array)
+        for element in array {
+            let elementArray = element.components(separatedBy: "^")
+            print(elementArray)
+            if(elementArray.count == 5) {
+                    songs.append(Song(name: elementArray[0],
+                                    albumName: elementArray[1],
+                                    artistName: elementArray[2],
+                                    imageName: elementArray[3],
+                                    trackName: elementArray[4]))
+            }
+        }
     }
 
     // Nr melodii -> nr elemente tabela

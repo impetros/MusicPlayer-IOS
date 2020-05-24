@@ -47,7 +47,11 @@ class PlayerViewController: UIViewController {
     }()
 
     let playPauseButton = UIButton()
-
+    let shuffleButton = UIButton()
+    let repeatButton = UIButton()
+    public var isShuffleChecked = false
+    public var isRepeatChecked = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -124,6 +128,7 @@ class PlayerViewController: UIViewController {
         let nextButton = UIButton()
         let backButton = UIButton()
 
+        
         // Frame
         let yPosition = artistNameLabel.frame.origin.y + 70 + 20
         let size: CGFloat = 70
@@ -143,25 +148,60 @@ class PlayerViewController: UIViewController {
                                   width: size,
                                   height: size)
 
+        shuffleButton.frame = CGRect(x: 20,
+                                  y: albumImageView.frame.size.height + 10 + 140,
+                                  width: size/2,
+                                  height: size/2)
+        
+        repeatButton.frame = CGRect(x: holder.frame.size.width - 50,
+                                  y: albumImageView.frame.size.height + 10 + 140,
+                                  width: size/2,
+                                  height: size/2)
+        
         // Actiunea butoanelor
         playPauseButton.addTarget(self, action: #selector(didTapPlayPauseButton), for: .touchUpInside)
         nextButton.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
         backButton.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
-
+        shuffleButton.addTarget(self, action: #selector(didTapShuffleButton), for: .touchUpInside)
+        repeatButton.addTarget(self, action: #selector(didTapRepeatButton), for: .touchUpInside)
+        
         // Poza + culoare butoane
 
         playPauseButton.setBackgroundImage(UIImage(systemName: "pause.fill"), for: .normal)
         backButton.setBackgroundImage(UIImage(systemName: "backward.fill"), for: .normal)
         nextButton.setBackgroundImage(UIImage(systemName: "forward.fill"), for: .normal)
-
+        shuffleButton.setBackgroundImage(UIImage(named: "shuffle"), for: .normal)
+        repeatButton.setBackgroundImage(UIImage(named: "repeat"), for: .normal)
+        
         playPauseButton.tintColor = .black
         backButton.tintColor = .black
         nextButton.tintColor = .black
 
+        shuffleButton.layer.shadowColor = UIColor.blue.cgColor
+        shuffleButton.layer.shadowOffset = CGSize(width: 5, height: 5)
+        shuffleButton.layer.shadowRadius = 5
+        if isShuffleChecked {
+            shuffleButton.layer.shadowOpacity = 0.5
+        } else {
+            shuffleButton.layer.shadowOpacity = 0
+        }
+        
+        repeatButton.layer.shadowColor = UIColor.blue.cgColor
+        repeatButton.layer.shadowOffset = CGSize(width: 5, height: 5)
+        repeatButton.layer.shadowRadius = 5
+        if isRepeatChecked {
+            repeatButton.layer.shadowOpacity = 0.5
+        } else {
+            repeatButton.layer.shadowOpacity = 0
+        }
+        
         holder.addSubview(playPauseButton)
         holder.addSubview(nextButton)
         holder.addSubview(backButton)
+        holder.addSubview(shuffleButton)
+        holder.addSubview(repeatButton)
 
+        
         // slider
         let slider = UISlider(frame: CGRect(x: 20,
                                             y: holder.frame.size.height-60,
@@ -173,6 +213,27 @@ class PlayerViewController: UIViewController {
         holder.addSubview(slider)
     }
 
+    @objc func didTapRepeatButton() {
+        isRepeatChecked = !isRepeatChecked
+        if isRepeatChecked {
+            repeatButton.layer.shadowOpacity = 0.5
+        } else {
+            repeatButton.layer.shadowOpacity = 0
+        }
+                
+    }
+    
+    
+    @objc func didTapShuffleButton() {
+        isShuffleChecked = !isShuffleChecked
+        if isShuffleChecked {
+            shuffleButton.layer.shadowOpacity = 0.5
+        } else {
+            shuffleButton.layer.shadowOpacity = 0
+        }
+                
+    }
+    
     @objc func didTapBackButton() {
         if position > 0 {
             position = position - 1
@@ -185,8 +246,26 @@ class PlayerViewController: UIViewController {
     }
 
     @objc func didTapNextButton() {
-        if position < (songs.count - 1) {
+        if isShuffleChecked {
+            var newposition = position
+            repeat {
+                newposition = Int.random(in: 0 ..< songs.count)
+            } while(newposition == position)
+            position = newposition
+            player?.stop()
+            for subview in holder.subviews {
+                subview.removeFromSuperview()
+            }
+            configure()
+        } else if position < (songs.count - 1) {
             position = position + 1
+            player?.stop()
+            for subview in holder.subviews {
+                subview.removeFromSuperview()
+            }
+            configure()
+        } else if isRepeatChecked{
+            position = 0
             player?.stop()
             for subview in holder.subviews {
                 subview.removeFromSuperview()
@@ -194,7 +273,7 @@ class PlayerViewController: UIViewController {
             configure()
         }
     }
-
+    
     @objc func didTapPlayPauseButton() {
         if player?.isPlaying == true {
             // Pause

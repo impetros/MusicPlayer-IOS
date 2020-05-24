@@ -3,16 +3,33 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "ViewController.viewDidLoad():ViewController.swift">
+      </ContextState>
+      <ContextState
          contextName = "ViewController.configureSongs():ViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "Data(base64Encoded: url)">
+               value = "dir.appendingPathComponent(file)">
             </PersistentString>
             <PersistentString
                value = "Bundle.main.path(forResource: &quot;data1&quot;, ofType: &quot;json&quot;)">
             </PersistentString>
             <PersistentString
+               value = "Data(base64Encoded: url)">
+            </PersistentString>
+            <PersistentString
                value = "Bundle.main.url(forResource: &quot;data&quot;, withExtension: &quot;json&quot;)">
+            </PersistentString>
+            <PersistentString
+               value = "Bundle.main.path(forResource: &quot;songs&quot;, ofType: &quot;txt&quot;)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PlayerViewController.didTapNextButton():PlayerViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "position">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

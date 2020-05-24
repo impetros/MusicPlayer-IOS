@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "ViewController.configureSongs():ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Data(base64Encoded: url)">
+            </PersistentString>
+            <PersistentString
+               value = "Bundle.main.path(forResource: &quot;data1&quot;, ofType: &quot;json&quot;)">
+            </PersistentString>
+            <PersistentString
+               value = "Bundle.main.url(forResource: &quot;data&quot;, withExtension: &quot;json&quot;)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

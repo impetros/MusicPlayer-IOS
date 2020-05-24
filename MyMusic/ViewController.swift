@@ -8,17 +8,25 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
     @IBOutlet var table: UITableView!
-
+    @IBOutlet var searchBar: UISearchBar!
+    
     var songs = [Song]()
-
+    var searchingNames = [Song]()
+    var searching = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSongs()
+        table.keyboardDismissMode = .onDrag
         table.delegate = self
         table.dataSource = self
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
 
     func configureSongs() {
@@ -71,12 +79,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     // Nr melodii -> nr elemente tabela
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if searching {
+            return searchingNames.count
+        }
         return songs.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let song = songs[indexPath.row]
+        let song = searching ? searchingNames[indexPath.row] : songs[indexPath.row]
+
         // Configurare
         cell.textLabel?.text = song.name
         cell.detailTextLabel?.text = song.albumName
@@ -97,7 +109,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Deselectam dupa ce apasam
         tableView.deselectRow(at: indexPath, animated: true)
 
-        let position = indexPath.row
+        var position = 0
+        if searching {
+            let selectedSong = searchingNames[indexPath.row]
+            for i in 0..<songs.count{
+                if(selectedSong == songs[i]){
+                    position = i;
+                    break;
+                }
+            }
+        } else {
+            position = indexPath.row
+        }
+            
         // Configuram player viewul si deschidem viewul de player
         guard let vc = storyboard?.instantiateViewController(identifier: "player") as? PlayerViewController else {
             return
@@ -106,14 +130,39 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         vc.position = position
         present(vc, animated: true)
     }
-
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchingNames.removeAll()
+        let searchTextLowerCased = searchText.lowercased()
+        for song in songs {
+            if(song.albumName.lowercased().hasPrefix(searchTextLowerCased) || song.artistName.lowercased().hasPrefix(searchTextLowerCased) ||
+                song.name.lowercased().hasPrefix(searchTextLowerCased)){
+                searchingNames.append(song)
+            }
+        }
+        searching = true
+        table.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searching = false
+        searchBar.text = ""
+        searchBar.endEditing(true)
+        table.reloadData()
+    }
 
 }
 
-struct Song {
+struct Song: Equatable {
     let name: String
     let albumName: String
     let artistName: String
     let imageName: String
     let trackName: String
+    
+        static func == (lhs: Song, rhs: Song) -> Bool {
+        return lhs.name == rhs.name && lhs.albumName == rhs.albumName &&
+            lhs.artistName == rhs.artistName && lhs.imageName == rhs.imageName &&
+            lhs.trackName == rhs.trackName
+    }
 }
